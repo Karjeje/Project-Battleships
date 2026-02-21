@@ -24,3 +24,12 @@ test("stores ship coordinates", () => {
   expect(board.ships[0].x).toBe(0);
   expect(board.ships[0].y).toBe(2);
 });
+
+test("receiveAttack registers a hit", () => {
+  const board = new Gameboard();
+  const ship = new Ship(3);
+
+  board.placeShip(ship, 0, 2);
+  board.receiveAttack(0, 2);
+  expect(board.ships[0].ship.hits).toBe(1);
+});
