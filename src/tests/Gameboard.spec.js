@@ -31,5 +31,14 @@ test("receiveAttack registers a hit", () => {
 
   board.placeShip(ship, 0, 2);
   board.receiveAttack(0, 2);
-  expect(board.ships[0].ship.hits).toBe(1);
+  expect(ship.hits).toBe(1);
+});
+
+test("receiveAttack stores missed attacks", () => {
+  const board = new Gameboard();
+  const ship = new Ship(3);
+
+  board.placeShip(ship, 0, 2);
+  board.receiveAttack(0, 1);
+  expect(board.missedAttacks.length).toBe(1);
 });

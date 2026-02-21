@@ -3,6 +3,7 @@ import Ship from "./Ship";
 class Gameboard {
   constructor() {
     this.ships = [];
+    this.missedAttacks = [];
   }
 
   placeShip(ship, x, y) {
@@ -11,7 +12,8 @@ class Gameboard {
 
   receiveAttack(x, y) {
     const attackedShip = this.ships.find((ship) => ship.x === x && ship.y === y);
-    attackedShip.ship.hit();
+    if (attackedShip) attackedShip.ship.hit();
+    else this.missedAttacks.push({ x, y });
   }
 }
 
