@@ -6,7 +6,7 @@ class Gameboard {
   }
 
   placeShip(ship, x, y) {
-    this.ships.push(ship);
+    this.ships.push({ ship, x, y });
   }
 }
 
