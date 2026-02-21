@@ -6,14 +6,21 @@ class Gameboard {
     this.missedAttacks = [];
   }
 
-  placeShip(ship, x, y) {
-    this.ships.push({ ship, x, y });
+  placeShip(ship, coordinates) {
+    this.ships.push({ ship, coordinates });
   }
 
   receiveAttack(x, y) {
-    const attackedShip = this.ships.find((ship) => ship.x === x && ship.y === y);
-    if (attackedShip) attackedShip.ship.hit();
-    else this.missedAttacks.push({ x, y });
+    const attackedShip = this.ships.find((ship) =>
+      ship.coordinates.some((coord) => coord.x === x && coord.y === y)
+    );
+    if (attackedShip) {
+      const coord = attackedShip.coordinates.find((c) => c.x === x && c.y === y);
+      coord.hit = true;
+      attackedShip.ship.hit();
+    } else {
+      this.missedAttacks.push({ x, y });
+    }
   }
 }
 
