@@ -22,6 +22,10 @@ class Gameboard {
       this.missedAttacks.push({ x, y });
     }
   }
+
+  allShipsSunk() {
+    return this.ships.every((shipObj) => shipObj.ship.isSunk());
+  }
 }
 
 export default Gameboard;
