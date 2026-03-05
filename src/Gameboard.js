@@ -4,6 +4,7 @@ class Gameboard {
   constructor() {
     this.ships = [];
     this.missedAttacks = [];
+    this.attackedCoordinates = [];
   }
 
   placeShip(ship, coordinates) {
@@ -11,6 +12,10 @@ class Gameboard {
   }
 
   receiveAttack(x, y) {
+    if (this.attackedCoordinates.some((coord) => coord.x === x && coord.y === y)) return;
+
+    this.attackedCoordinates.push({ x, y });
+
     const attackedShip = this.ships.find((ship) =>
       ship.coordinates.some((coord) => coord.x === x && coord.y === y)
     );

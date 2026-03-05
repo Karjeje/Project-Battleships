@@ -96,3 +96,15 @@ test("returns false if at least one ship is not sunk", () => {
 
   expect(board.allShipsSunk()).toBe(false);
 });
+
+test("cannot attack the same coordinate twice", () => {
+  const board = new Gameboard();
+  const ship = new Ship(1);
+
+  board.placeShip(ship, [{ x: 0, y: 0, hit: false }]);
+
+  board.receiveAttack(0, 0);
+  board.receiveAttack(0, 0);
+
+  expect(ship.hits).toBe(1);
+});
