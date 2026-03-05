@@ -10,7 +10,7 @@ test("places ship on the gameboard", () => {
   const board = new Gameboard();
   const ship = new Ship(3);
 
-  board.placeShip(ship, 0, 0);
+  board.placeShip(ship, [{ x: 0, y: 0, hit: false }]);
 
   expect(board.ships.length).toBe(1);
 });
