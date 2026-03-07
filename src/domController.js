@@ -46,7 +46,21 @@ const domController = (() => {
 
     gameController.attack(x, y);
 
+    let winner = gameController.checkWinner();
+    if (winner) {
+      renderGame();
+      alert("Game over!");
+      return;
+    }
+
     gameController.computerMove();
+
+    winner = gameController.checkWinner();
+    if (winner) {
+      renderGame();
+      alert("Game over!");
+      return;
+    }
 
     renderGame();
   });
