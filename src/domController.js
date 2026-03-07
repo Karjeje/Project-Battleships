@@ -1,8 +1,8 @@
 import gameController from "./gameController";
 
 const domController = (() => {
-  const playerBoard = document.querySelector("player-board");
-  const enemyBoard = document.querySelector("enemy-board");
+  const playerBoard = document.querySelector("#player-board");
+  const enemyBoard = document.querySelector("#enemy-board");
 
   function renderBoard(board, container, hideShips = false) {
     container.innerHTML = "";
