@@ -65,3 +65,5 @@ const gameController = (() => {
     computerMove,
   };
 })();
+
+export default gameController;
