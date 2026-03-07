@@ -2,7 +2,7 @@ import gameController from "./gameController";
 
 const domController = (() => {
   const playerBoard = document.querySelector("player-board");
-  const enemnyBoard = document.querySelector("enemy-board");
+  const enemyBoard = document.querySelector("enemy-board");
 
   function renderBoard(board, container, hideShips = false) {
     container.innerHTML = "";
@@ -21,8 +21,17 @@ const domController = (() => {
 
   function renderGame() {
     renderBoard(gameController.player1.gameboard, playerBoard);
-    renderBoard(gameController.player2.gameboard, true);
+    renderBoard(gameController.player2.gameboard, enemyBoard, true);
   }
+
+  enemyBoard.addEventListener("click", (e) => {
+    const x = Number(e.target.dataset.x);
+    const y = Number(e.target.dataset.y);
+
+    gameController.attack(x, y);
+
+    renderGame();
+  });
 
   return { renderGame };
 })();
