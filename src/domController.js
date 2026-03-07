@@ -18,4 +18,13 @@ const domController = (() => {
       }
     }
   }
+
+  function renderGame() {
+    renderBoard(gameController.player1.gameboard, playerBoard);
+    renderBoard(gameController.player2.gameboard, true);
+  }
+
+  return { renderGame };
 })();
+
+export default domController;
