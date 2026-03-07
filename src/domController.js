@@ -14,6 +14,22 @@ const domController = (() => {
         cell.dataset.x = x;
         cell.dataset.y = y;
 
+        if (board.missedAttacks.some((c) => c.x === x && c.y === y)) {
+          cell.style.background = "gray";
+        }
+
+        board.ships.forEach((ship) => {
+          ship.coordinates.forEach((coord) => {
+            if (coord.x === x && coord.y === y) {
+              if (coord.hit) {
+                cell.style.background = "red";
+              } else if (!hideShips) {
+                cell.style.background = "green";
+              }
+            }
+          });
+        });
+
         container.appendChild(cell);
       }
     }
