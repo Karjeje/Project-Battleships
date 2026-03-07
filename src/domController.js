@@ -46,6 +46,8 @@ const domController = (() => {
 
     gameController.attack(x, y);
 
+    gameController.computerMove();
+
     renderGame();
   });
 
