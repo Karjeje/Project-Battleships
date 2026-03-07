@@ -1,4 +1,5 @@
 import Player from "./Player";
+import Ship from "./Ship";
 
 const gameController = (() => {
   const player1 = new Player();
