@@ -23,6 +23,9 @@ const domController = (() => {
             if (coord.x === x && coord.y === y) {
               if (coord.hit) {
                 cell.style.background = "red";
+                if (ship.ship.isSunk()) {
+                  cell.style.background = "black";
+                }
               } else if (!hideShips) {
                 cell.style.background = "green";
               }
