@@ -49,7 +49,8 @@ const domController = (() => {
     const x = Number(e.target.dataset.x);
     const y = Number(e.target.dataset.y);
 
-    gameController.attack(x, y);
+    // gameController.attack(x, y);
+    gameController.playerAttack(x, y);
 
     let winner = gameController.checkWinner();
     if (winner) {
@@ -64,6 +65,7 @@ const domController = (() => {
     winner = gameController.checkWinner();
     if (winner) {
       renderGame();
+      enemyBoard.style.pointerEvents = "none";
       alert("Game over!");
       return;
     }

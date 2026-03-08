@@ -7,16 +7,19 @@ const gameController = (() => {
 
   let currentPlayer = player1;
 
-  function switchTurn() {
-    currentPlayer = currentPlayer === player1 ? player2 : player1;
-  }
+  // function switchTurn() {
+  //   currentPlayer = currentPlayer === player1 ? player2 : player1;
+  // }
 
-  function attack(x, y) {
-    const enemy = currentPlayer === player1 ? player2 : player1;
+  // function attack(x, y) {
+  //   const enemy = currentPlayer === player1 ? player2 : player1;
 
-    enemy.gameboard.receiveAttack(x, y);
+  //   enemy.gameboard.receiveAttack(x, y);
 
-    switchTurn();
+  //   switchTurn();
+  // }
+  function playerAttack(x, y) {
+    player2.gameboard.receiveAttack(x, y);
   }
 
   function computerMove() {
@@ -30,7 +33,9 @@ const gameController = (() => {
       y = Math.floor(Math.random() * 10);
     } while (board.attackedCoordinates.some((c) => c.x === x && c.y === y));
 
-    attack(x, y);
+    player1.gameboard.receiveAttack(x, y);
+
+    // attack(x, y);
   }
 
   function checkWinner() {
@@ -66,8 +71,9 @@ const gameController = (() => {
   return {
     player1,
     player2,
-    switchTurn,
-    attack,
+    // switchTurn,
+    // attack,
+    playerAttack,
     checkWinner,
     computerMove,
   };
