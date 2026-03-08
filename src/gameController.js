@@ -20,8 +20,15 @@ const gameController = (() => {
   }
 
   function computerMove() {
-    const x = Math.floor(Math.random() * 10);
-    const y = Math.floor(Math.random() * 10);
+    let x;
+    let y;
+
+    const board = player1.gameboard;
+
+    do {
+      x = Math.floor(Math.random() * 10);
+      y = Math.floor(Math.random() * 10);
+    } while (board.attackedCoordinates.some((c) => c.x === x && c.y === y));
 
     attack(x, y);
   }
