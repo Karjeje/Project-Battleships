@@ -56,7 +56,9 @@ const domController = (() => {
     if (winner) {
       renderGame();
       enemyBoard.style.pointerEvents = "none";
-      alert("Game over!");
+      setTimeout(() => {
+        alert("Game over!");
+      }, 1);
       return;
     }
 
@@ -66,7 +68,9 @@ const domController = (() => {
     if (winner) {
       renderGame();
       enemyBoard.style.pointerEvents = "none";
-      alert("Game over!");
+      setTimeout(() => {
+        alert("Game over!");
+      }, 1);
       return;
     }
 
