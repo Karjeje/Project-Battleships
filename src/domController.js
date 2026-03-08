@@ -16,6 +16,7 @@ const domController = (() => {
 
         if (board.missedAttacks.some((c) => c.x === x && c.y === y)) {
           cell.style.background = "gray";
+          cell.style.cursor = "not-allowed";
         }
 
         board.ships.forEach((ship) => {
@@ -23,6 +24,7 @@ const domController = (() => {
             if (coord.x === x && coord.y === y) {
               if (coord.hit) {
                 cell.style.background = "red";
+                cell.style.cursor = "not-allowed";
                 if (ship.ship.isSunk()) {
                   cell.style.background = "black";
                 }
@@ -49,7 +51,10 @@ const domController = (() => {
     const x = Number(e.target.dataset.x);
     const y = Number(e.target.dataset.y);
 
-    // gameController.attack(x, y);
+    const enemyBoardState = gameController.player2.gameboard;
+
+    if (enemyBoardState.attackedCoordinates.some((c) => c.x === x && c.y === y)) return;
+
     gameController.playerAttack(x, y);
 
     let winner = gameController.checkWinner();

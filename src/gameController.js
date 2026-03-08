@@ -5,19 +5,6 @@ const gameController = (() => {
   const player1 = new Player();
   const player2 = new Player("computer");
 
-  let currentPlayer = player1;
-
-  // function switchTurn() {
-  //   currentPlayer = currentPlayer === player1 ? player2 : player1;
-  // }
-
-  // function attack(x, y) {
-  //   const enemy = currentPlayer === player1 ? player2 : player1;
-
-  //   enemy.gameboard.receiveAttack(x, y);
-
-  //   switchTurn();
-  // }
   function playerAttack(x, y) {
     player2.gameboard.receiveAttack(x, y);
   }
@@ -34,8 +21,6 @@ const gameController = (() => {
     } while (board.attackedCoordinates.some((c) => c.x === x && c.y === y));
 
     player1.gameboard.receiveAttack(x, y);
-
-    // attack(x, y);
   }
 
   function checkWinner() {
@@ -71,8 +56,6 @@ const gameController = (() => {
   return {
     player1,
     player2,
-    // switchTurn,
-    // attack,
     playerAttack,
     checkWinner,
     computerMove,
