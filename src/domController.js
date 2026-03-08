@@ -41,6 +41,8 @@ const domController = (() => {
   }
 
   enemyBoard.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("cell")) return;
+
     const x = Number(e.target.dataset.x);
     const y = Number(e.target.dataset.y);
 
@@ -49,6 +51,7 @@ const domController = (() => {
     let winner = gameController.checkWinner();
     if (winner) {
       renderGame();
+      enemyBoard.style.pointerEvents = "none";
       alert("Game over!");
       return;
     }
