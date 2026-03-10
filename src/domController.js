@@ -112,13 +112,11 @@ const domController = (() => {
       return;
     }
 
-    const overlapCheck = newShipCoords.some((coord) => {
-      gameController.player1.gameboard.ships.some((ship) => {
-        ship.coordinates.some((existing) => {
-          existing.x === coord.x && existing.y === coord.y;
-        });
-      });
-    });
+    const overlapCheck = newShipCoords.some((coord) =>
+      gameController.player1.gameboard.ships.some((ship) =>
+        ship.coordinates.some((existing) => existing.x === coord.x && existing.y === coord.y)
+      )
+    );
 
     if (overlapCheck) {
       console.log("Ships were overlapping.");
