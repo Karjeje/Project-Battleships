@@ -94,7 +94,8 @@ const domController = (() => {
   });
 
   playerBoard.addEventListener("drop", (e) => {
-    console.log("dropped a bomba");
+    if (!currentlyDraggedShipLength) return;
+    console.log("Dropping ship at:", x, y);
     const cell = e.target.closest(".cell");
     if (!cell) return;
 
@@ -125,8 +126,8 @@ const domController = (() => {
 
     gameController.player1.gameboard.placeShip(new Ship(currentlyDraggedShipLength), newShipCoords);
 
-    if ((currentlyDraggedShipLength = 5)) carrier.remove();
-    else if ((currentlyDraggedShipLength = 4)) battleship.remove();
+    if (currentlyDraggedShipLength === 5) carrier.remove();
+    else if (currentlyDraggedShipLength === 4) battleship.remove();
     else cruiser.remove();
     renderGame();
   });
