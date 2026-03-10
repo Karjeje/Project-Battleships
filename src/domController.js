@@ -101,15 +101,31 @@ const domController = (() => {
     const x = Number(cell.dataset.x);
     const y = Number(cell.dataset.y);
 
-    const draggedShipCoords = [];
+    const newShipCoords = [];
 
     for (let i = 0; i < currentlyDraggedShipLength; i++) {
-      draggedShipCoords.push({ x: x + i, y: y, hit: false });
+      newShipCoords.push({ x: x + i, y: y, hit: false });
     }
 
-    if (x + currentlyDraggedShipLength < 10) {
-      board.placeShip(new Ship(currentlyDraggedShipLength), draggedShipCoords);
+    if (x + currentlyDraggedShipLength > 10) {
+      console.log("Ship was placed out of bounds.");
+      return;
     }
+
+    const overlapCheck = newShipCoords.some((coord) => {
+      gameController.player1.gameboard.ships.some((ship) => {
+        ship.coordinates.some((existing) => {
+          existing.x === coord.x && existing.y === coord.y;
+        });
+      });
+    });
+
+    if (overlapCheck) {
+      console.log("Ships were overlapping.");
+      return;
+    }
+
+    gameController.player1.gameboard.placeShip(new Ship(currentlyDraggedShipLength), newShipCoords);
   });
 
   carrier.addEventListener("dragstart", () => {
