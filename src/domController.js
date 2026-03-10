@@ -107,7 +107,7 @@ const domController = (() => {
       draggedShipCoords.push({ x: x + i, y: y, hit: false });
     }
 
-    if (x < 6) {
+    if (x + currentlyDraggedShipLength < 10) {
       board.placeShip(new Ship(currentlyDraggedShipLength), draggedShipCoords);
     }
   });
