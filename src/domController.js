@@ -90,7 +90,7 @@ const domController = (() => {
   playerBoard.addEventListener("dragover", (e) => {
     const cell = e.target.closest(".cell");
     if (!cell) return;
-    cell.preventDefault();
+    e.preventDefault();
   });
 
   playerBoard.addEventListener("drop", (e) => {
