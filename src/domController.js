@@ -1,8 +1,13 @@
 import gameController from "./gameController";
+import Ship from "./Ship";
 
 const domController = (() => {
   const playerBoard = document.querySelector("#player-board");
   const enemyBoard = document.querySelector("#enemy-board");
+  // const carrier = document.querySelector("#ship1");
+  // const battleship = document.querySelector("#ship2");
+  // const cruiser = document.querySelector("#ship3");
+  // let currentlyDraggedShipLength;
 
   function renderBoard(board, container, hideShips = false) {
     container.innerHTML = "";
@@ -34,6 +39,26 @@ const domController = (() => {
             }
           });
         });
+
+        // cell.addEventListener("dragover", (e) => {
+        //   e.preventDefault();
+        // });
+
+        // cell.addEventListener("drop", (e) => {
+        //   console.log("dropped a bomba");
+        //   const x = Number(e.target.dataset.x);
+        //   const y = Number(e.target.dataset.y);
+
+        //   const draggedShipCoords = [];
+
+        //   for (let i = 0; i < currentlyDraggedShipLength; i++) {
+        //     draggedShipCoords.push({ x: x + i, y: y, hit: false });
+        //   }
+
+        //   if (x < 6) {
+        //     board.placeShip(new Ship(currentlyDraggedShipLength), draggedShipCoords);
+        //   }
+        // });
 
         container.appendChild(cell);
       }
@@ -81,6 +106,11 @@ const domController = (() => {
 
     renderGame();
   });
+
+  // carrier.addEventListener("dragstart", () => {
+  //   console.log("started dragging");
+  //   currentlyDraggedShipLength = 5;
+  // });
 
   return { renderGame };
 })();
