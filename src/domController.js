@@ -126,6 +126,11 @@ const domController = (() => {
     }
 
     gameController.player1.gameboard.placeShip(new Ship(currentlyDraggedShipLength), newShipCoords);
+
+    if ((currentlyDraggedShipLength = 5)) carrier.remove();
+    else if ((currentlyDraggedShipLength = 4)) battleship.remove();
+    else cruiser.remove();
+    renderGame();
   });
 
   carrier.addEventListener("dragstart", () => {
