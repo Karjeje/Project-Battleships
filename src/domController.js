@@ -112,10 +112,20 @@ const domController = (() => {
     }
   });
 
-  // carrier.addEventListener("dragstart", () => {
-  //   console.log("started dragging");
-  //   currentlyDraggedShipLength = 5;
-  // });
+  carrier.addEventListener("dragstart", () => {
+    console.log("started dragging carrier");
+    currentlyDraggedShipLength = 5;
+  });
+
+  battleship.addEventListener("dragstart", () => {
+    console.log("started dragging battleship");
+    currentlyDraggedShipLength = 4;
+  });
+
+  cruiser.addEventListener("dragstart", () => {
+    console.log("started dragging cruiser");
+    currentlyDraggedShipLength = 3;
+  });
 
   return { renderGame };
 })();
