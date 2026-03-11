@@ -8,6 +8,7 @@ const domController = (() => {
   const battleship = document.querySelector("#ship2");
   const cruiser = document.querySelector("#ship3");
   let currentlyDraggedShipLength;
+  let orientation = "horizontal";
 
   function renderBoard(board, container, hideShips = false) {
     container.innerHTML = "";
@@ -49,6 +50,14 @@ const domController = (() => {
     renderBoard(gameController.player1.gameboard, playerBoard);
     renderBoard(gameController.player2.gameboard, enemyBoard, true);
   }
+
+  document.addEventListener("keydown", (e) => {
+    if (!currentlyDraggedShipLength) return;
+    if (e.key.toLowerCase() === "r") {
+      orientation = orientation === "horizontal" ? "vertical" : "horizontal";
+    }
+    console.log("orientation:", orientation);
+  });
 
   enemyBoard.addEventListener("click", (e) => {
     if (!e.target.classList.contains("cell")) return;
@@ -106,13 +115,28 @@ const domController = (() => {
 
     const newShipCoords = [];
 
-    for (let i = 0; i < currentlyDraggedShipLength; i++) {
-      newShipCoords.push({ x: x + i, y: y, hit: false });
+    if (orientation === "horizontal") {
+      for (let i = 0; i < currentlyDraggedShipLength; i++) {
+        newShipCoords.push({ x: x + i, y: y, hit: false });
+      }
+    } else if (orientation === "vertical") {
+      for (let i = 0; i < currentlyDraggedShipLength; i++) {
+        newShipCoords.push({ x: x, y: y + i, hit: false });
+      }
     }
 
-    if (x + currentlyDraggedShipLength > 10) {
-      console.log("Ship was placed out of bounds.");
-      return;
+    if (orientation === "horizontal") {
+      if (x + currentlyDraggedShipLength > 10) {
+        console.log("Ship was placed out of bounds.");
+        return;
+      }
+    }
+
+    if (orientation === "vertical") {
+      if (y + currentlyDraggedShipLength > 10) {
+        console.log("Ship was placed out of bounds.");
+        return;
+      }
     }
 
     const overlapCheck = newShipCoords.some((coord) =>
@@ -140,16 +164,19 @@ const domController = (() => {
   carrier.addEventListener("dragstart", () => {
     console.log("started dragging carrier");
     currentlyDraggedShipLength = 5;
+    orientation = "horizontal";
   });
 
   battleship.addEventListener("dragstart", () => {
     console.log("started dragging battleship");
     currentlyDraggedShipLength = 4;
+    orientation = "horizontal";
   });
 
   cruiser.addEventListener("dragstart", () => {
     console.log("started dragging cruiser");
     currentlyDraggedShipLength = 3;
+    orientation = "horizontal";
   });
 
   return { renderGame };
