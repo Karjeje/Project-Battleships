@@ -97,8 +97,64 @@ const domController = (() => {
   });
 
   playerBoard.addEventListener("dragover", (e) => {
+    if (!currentlyDraggedShipLength) return;
+
     const cell = e.target.closest(".cell");
     if (!cell) return;
+
+    let status = "valid";
+
+    const x = Number(cell.dataset.x);
+    const y = Number(cell.dataset.y);
+
+    playerBoard.querySelectorAll(".preview, .invalid").forEach((cell) => {
+      cell.classList.remove("preview", "invalid");
+    });
+
+    const previewShipCoords = [];
+
+    if (orientation === "horizontal") {
+      for (let i = 0; i < currentlyDraggedShipLength; i++) {
+        previewShipCoords.push({ x: x + i, y: y, hit: false });
+      }
+    } else if (orientation === "vertical") {
+      for (let i = 0; i < currentlyDraggedShipLength; i++) {
+        previewShipCoords.push({ x: x, y: y + i, hit: false });
+      }
+    }
+
+    if (orientation === "horizontal") {
+      if (x + currentlyDraggedShipLength > 10) {
+        status = "invalid";
+      }
+    }
+
+    if (orientation === "vertical") {
+      if (y + currentlyDraggedShipLength > 10) {
+        status = "invalid";
+      }
+    }
+
+    const overlapCheck = previewShipCoords.some((coord) =>
+      gameController.player1.gameboard.ships.some((ship) =>
+        ship.coordinates.some((existing) => existing.x === coord.x && existing.y === coord.y)
+      )
+    );
+
+    if (overlapCheck) {
+      status = "invalid";
+    }
+
+    previewShipCoords.forEach((coord) => {
+      const previewCell = playerBoard.querySelector(`[data-x="${coord.x}"][data-y="${coord.y}"]`);
+
+      if (!previewCell) return;
+
+      previewCell.classList.add("preview");
+
+      if (status === "invalid") previewCell.classList.add("invalid");
+    });
+
     e.preventDefault();
   });
 
@@ -157,6 +213,10 @@ const domController = (() => {
     else cruiser.remove();
 
     currentlyDraggedShipLength = null;
+
+    playerBoard.querySelectorAll(".preview, .invalid").forEach((cell) => {
+      cell.classList.remove("preview", "invalid");
+    });
 
     renderGame();
   });

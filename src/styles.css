@@ -67,3 +67,11 @@ body {
   background: lightblue;
   border: 1px solid black;
 }
+
+.preview {
+  background-color: lightgreen;
+}
+
+.invalid {
+  background-color: tomato;
+}
