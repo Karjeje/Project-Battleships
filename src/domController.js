@@ -9,6 +9,7 @@ const domController = (() => {
   const cruiser = document.querySelector("#ship3");
   let currentlyDraggedShipLength;
   let orientation = "horizontal";
+  gameController.setupComputerShips();
 
   function renderBoard(board, container, hideShips = false) {
     container.innerHTML = "";

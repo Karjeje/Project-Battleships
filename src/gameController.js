@@ -30,28 +30,68 @@ const gameController = (() => {
     return null;
   }
 
-  player1.gameboard.placeShip(new Ship(3), [
-    { x: 0, y: 0, hit: false },
-    { x: 1, y: 0, hit: false },
-    { x: 2, y: 0, hit: false },
-  ]);
-  player1.gameboard.placeShip(new Ship(4), [
-    { x: 2, y: 5, hit: false },
-    { x: 3, y: 5, hit: false },
-    { x: 4, y: 5, hit: false },
-    { x: 5, y: 5, hit: false },
-  ]);
-  player2.gameboard.placeShip(new Ship(3), [
-    { x: 2, y: 5, hit: false },
-    { x: 3, y: 5, hit: false },
-    { x: 4, y: 5, hit: false },
-  ]);
-  player2.gameboard.placeShip(new Ship(4), [
-    { x: 2, y: 0, hit: false },
-    { x: 2, y: 1, hit: false },
-    { x: 2, y: 2, hit: false },
-    { x: 2, y: 3, hit: false },
-  ]);
+  function generateComputerShipCoords(shipLength) {
+    const computerShipCoords = [];
+
+    const startingCoord = {
+      x: Math.floor(Math.random() * 10),
+      y: Math.floor(Math.random() * 10),
+      hit: false,
+    };
+
+    const orientation = Math.random() >= 0.5 ? "vertical" : "horizontal";
+
+    if (orientation === "horizontal") {
+      const direction = startingCoord.x + shipLength > 10 ? "left" : "right";
+
+      if (direction === "right") {
+        for (let i = 0; i < shipLength; i++) {
+          computerShipCoords.push({ x: startingCoord.x + i, y: startingCoord.y, hit: false });
+        }
+      } else {
+        for (let i = 0; i < shipLength; i++) {
+          computerShipCoords.push({ x: startingCoord.x - i, y: startingCoord.y, hit: false });
+        }
+      }
+    }
+
+    if (orientation === "vertical") {
+      const direction = startingCoord.y + shipLength > 10 ? "up" : "down";
+
+      if (direction === "down") {
+        for (let i = 0; i < shipLength; i++) {
+          computerShipCoords.push({ x: startingCoord.x, y: startingCoord.y + i, hit: false });
+        }
+      } else {
+        for (let i = 0; i < shipLength; i++) {
+          computerShipCoords.push({ x: startingCoord.x, y: startingCoord.y - i, hit: false });
+        }
+      }
+    }
+
+    const overlapCheck = computerShipCoords.some((coord) =>
+      player2.gameboard.ships.some((ship) =>
+        ship.coordinates.some((existing) => existing.x === coord.x && existing.y === coord.y)
+      )
+    );
+
+    if (overlapCheck) {
+      return generateComputerShipCoords(shipLength);
+    }
+
+    return computerShipCoords;
+  }
+
+  function setupComputerShips() {
+    const carrierCoords = generateComputerShipCoords(5);
+    player2.gameboard.placeShip(new Ship(5), carrierCoords);
+
+    const battleshipCoords = generateComputerShipCoords(4);
+    player2.gameboard.placeShip(new Ship(4), battleshipCoords);
+
+    const cruiserCoords = generateComputerShipCoords(3);
+    player2.gameboard.placeShip(new Ship(3), cruiserCoords);
+  }
 
   return {
     player1,
@@ -59,6 +99,7 @@ const gameController = (() => {
     playerAttack,
     checkWinner,
     computerMove,
+    setupComputerShips,
   };
 })();
 
