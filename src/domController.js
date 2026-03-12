@@ -52,7 +52,6 @@ const domController = (() => {
   }
 
   document.addEventListener("keydown", (e) => {
-    if (!currentlyDraggedShipLength) return;
     if (e.key.toLowerCase() === "r") {
       orientation = orientation === "horizontal" ? "vertical" : "horizontal";
     }
@@ -213,6 +212,7 @@ const domController = (() => {
     else cruiser.remove();
 
     currentlyDraggedShipLength = null;
+    orientation = "horizontal";
 
     playerBoard.querySelectorAll(".preview, .invalid").forEach((cell) => {
       cell.classList.remove("preview", "invalid");
@@ -224,19 +224,16 @@ const domController = (() => {
   carrier.addEventListener("dragstart", () => {
     console.log("started dragging carrier");
     currentlyDraggedShipLength = 5;
-    orientation = "horizontal";
   });
 
   battleship.addEventListener("dragstart", () => {
     console.log("started dragging battleship");
     currentlyDraggedShipLength = 4;
-    orientation = "horizontal";
   });
 
   cruiser.addEventListener("dragstart", () => {
     console.log("started dragging cruiser");
     currentlyDraggedShipLength = 3;
-    orientation = "horizontal";
   });
 
   return { renderGame };
