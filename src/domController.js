@@ -157,6 +157,12 @@ const domController = (() => {
     e.preventDefault();
   });
 
+  playerBoard.addEventListener("dragleave", () => {
+    playerBoard.querySelectorAll(".preview, .invalid").forEach((cell) => {
+      cell.classList.remove("preview", "invalid");
+    });
+  });
+
   playerBoard.addEventListener("drop", (e) => {
     if (!currentlyDraggedShipLength) return;
 
