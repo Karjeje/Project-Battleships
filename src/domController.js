@@ -277,7 +277,24 @@ const domController = (() => {
     shipsPlaced++;
 
     if (shipsPlaced === 3) {
-      gamePhase = "playing";
+      if (gameMode === "pvp") {
+        if (placingPlayer === 1) {
+          placingPlayer = 2;
+          shipsPlaced = 0;
+
+          alert("Player 2: Place your ships");
+
+          renderGame();
+          return;
+        } else {
+          gamePhase = "playing";
+          currentTurn = "player1";
+
+          alert("Game starts. Player 1 turn");
+        }
+      } else {
+        gamePhase = "playing";
+      }
     }
 
     renderGame();
