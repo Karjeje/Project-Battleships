@@ -64,6 +64,7 @@ const domController = (() => {
   });
 
   enemyBoard.addEventListener("click", (e) => {
+    console.log(gamePhase);
     if (gamePhase !== "playing") return;
     if (!e.target.classList.contains("cell")) return;
 
@@ -280,6 +281,8 @@ const domController = (() => {
   });
 
   pvcBtn.addEventListener("click", () => {
+    resetGame();
+
     gamePhase = "placing";
 
     gameController.setupComputerShips();
@@ -300,10 +303,13 @@ const domController = (() => {
     gameController.player2.gameboard.missedAttacks = [];
     gameController.player2.gameboard.attackedCoordinates = [];
 
+    currentlyDraggedShipLength = null;
+    orientation = "horizontal";
     shipsPlaced = 0;
     currentTurn = "player";
     gamePhase = "placing";
 
+    enemyBoard.style.pointerEvents = "";
     carrier.style.display = "flex";
     battleship.style.display = "flex";
     cruiser.style.display = "flex";
