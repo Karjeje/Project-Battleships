@@ -84,7 +84,10 @@ const domController = (() => {
     const x = Number(e.target.dataset.x);
     const y = Number(e.target.dataset.y);
 
-    const enemyBoardState = gameController.player2.gameboard;
+    const enemyBoardState =
+      gameMode === "pvp" && currentTurn === "player2"
+        ? gameController.player1.gameboard
+        : gameController.player2.gameboard;
 
     if (enemyBoardState.attackedCoordinates.some((c) => c.x === x && c.y === y)) return;
 
@@ -92,7 +95,11 @@ const domController = (() => {
       ship.coordinates.some((c) => c.x === x && c.y === y)
     );
 
-    gameController.playerAttack(x, y);
+    if (gameMode === "pvp") {
+      enemyBoardState.receiveAttack(x, y);
+    } else {
+      gameController.playerAttack(x, y);
+    }
 
     let winner = gameController.checkWinner();
     if (winner) {
