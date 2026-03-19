@@ -114,7 +114,9 @@ const domController = (() => {
     if (gameMode === "pvp") {
       if (!wasHit) {
         currentTurn = currentTurn === "player1" ? "player2" : "player1";
-        alert(`${currentTurn}'s turn`);
+        setTimeout(() => {
+          alert(`${currentTurn}'s turn`);
+        }, 10);
       }
     } else {
       if (!wasHit) {
@@ -178,8 +180,13 @@ const domController = (() => {
       }
     }
 
+    const currentBoard =
+      gameMode === "pvp" && placingPlayer === 2
+        ? gameController.player2.gameboard
+        : gameController.player1.gameboard;
+
     const overlapCheck = previewShipCoords.some((coord) =>
-      gameController.player1.gameboard.ships.some((ship) =>
+      currentBoard.ships.some((ship) =>
         ship.coordinates.some((existing) => existing.x === coord.x && existing.y === coord.y)
       )
     );
@@ -254,8 +261,13 @@ const domController = (() => {
       }
     }
 
+    const currentBoard =
+      gameMode === "pvp" && placingPlayer === 2
+        ? gameController.player2.gameboard
+        : gameController.player1.gameboard;
+
     const overlapCheck = newShipCoords.some((coord) =>
-      gameController.player1.gameboard.ships.some((ship) =>
+      currentBoard.ships.some((ship) =>
         ship.coordinates.some((existing) => existing.x === coord.x && existing.y === coord.y)
       )
     );
@@ -269,11 +281,6 @@ const domController = (() => {
 
       return;
     }
-
-    const currentBoard =
-      gameMode === "pvp" && placingPlayer === 2
-        ? gameController.player2.gameboard
-        : gameController.player1.gameboard;
 
     currentBoard.placeShip(new Ship(currentlyDraggedShipLength), newShipCoords);
 
@@ -296,7 +303,13 @@ const domController = (() => {
           placingPlayer = 2;
           shipsPlaced = 0;
 
-          alert("Player 2: Place your ships");
+          setTimeout(() => {
+            alert("Player 2: Place your ships");
+          }, 10);
+
+          carrier.style.display = "flex";
+          battleship.style.display = "flex";
+          cruiser.style.display = "flex";
 
           renderGame();
           return;
@@ -304,7 +317,9 @@ const domController = (() => {
           gamePhase = "playing";
           currentTurn = "player1";
 
-          alert("Game starts. Player 1 turn");
+          setTimeout(() => {
+            alert("Game starts. Player 1 turn");
+          }, 10);
         }
       } else {
         gamePhase = "playing";
@@ -358,6 +373,10 @@ const domController = (() => {
   });
 
   function resetGame() {
+    if (gameMode === "pvc") {
+      gameController.setupComputerShips();
+    }
+
     gameController.player1.gameboard.ships = [];
     gameController.player1.gameboard.missedAttacks = [];
     gameController.player1.gameboard.attackedCoordinates = [];
@@ -371,12 +390,13 @@ const domController = (() => {
     shipsPlaced = 0;
     gamePhase = "placing";
 
+    placingPlayer = 1;
+
     enemyBoard.style.pointerEvents = "";
     carrier.style.display = "flex";
     battleship.style.display = "flex";
     cruiser.style.display = "flex";
 
-    gameController.setupComputerShips();
     renderGame();
   }
 
