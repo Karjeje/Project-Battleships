@@ -7,6 +7,8 @@ const domController = (() => {
   const carrier = document.querySelector("#ship1");
   const battleship = document.querySelector("#ship2");
   const cruiser = document.querySelector("#ship3");
+  const pvcBtn = document.querySelector("#pvc-btn");
+  let gamePhase = "idle";
   let currentlyDraggedShipLength;
   let orientation = "horizontal";
   gameController.setupComputerShips();
@@ -241,6 +243,18 @@ const domController = (() => {
   cruiser.addEventListener("dragstart", () => {
     console.log("started dragging cruiser");
     currentlyDraggedShipLength = 3;
+  });
+
+  pvcBtn.addEventListener("click", () => {
+    gamePhase = "placing";
+
+    gameController.setupComputerShips();
+
+    cruiser.style.display = "flex";
+    battleship.style.display = "flex";
+    cruiser.style.display = "flex";
+
+    renderGame();
   });
 
   return { renderGame };
