@@ -9,8 +9,11 @@ const domController = (() => {
   const cruiser = document.querySelector("#ship3");
   const pvcBtn = document.querySelector("#pvc-btn");
   const resetBtn = document.querySelector("#reset-btn");
+  const pvpBtn = document.querySelector("#pvp-btn");
   let gamePhase = "idle";
-  let currentTurn = "player";
+  let gameMode = null;
+  let currentTurn = "player1";
+  let placingPlayer = 1;
   let currentlyDraggedShipLength;
   let shipsPlaced = 0;
   let orientation = "horizontal";
@@ -52,8 +55,18 @@ const domController = (() => {
   }
 
   function renderGame() {
-    renderBoard(gameController.player1.gameboard, playerBoard);
-    renderBoard(gameController.player2.gameboard, enemyBoard, true);
+    if (gameMode === "pvp") {
+      if (currentTurn === "player1") {
+        renderBoard(gameController.player1.gameboard, playerBoard);
+        renderBoard(gameController.player2.gameboard, enemyBoard, true);
+      } else {
+        renderBoard(gameController.player2.gameboard, playerBoard);
+        renderBoard(gameController.player1.gameboard, enemyBoard, true);
+      }
+    } else {
+      renderBoard(gameController.player1.gameboard, playerBoard);
+      renderBoard(gameController.player2.gameboard, enemyBoard, true);
+    }
   }
 
   document.addEventListener("keydown", (e) => {
@@ -306,7 +319,6 @@ const domController = (() => {
     currentlyDraggedShipLength = null;
     orientation = "horizontal";
     shipsPlaced = 0;
-    currentTurn = "player";
     gamePhase = "placing";
 
     enemyBoard.style.pointerEvents = "";
