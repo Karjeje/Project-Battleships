@@ -10,6 +10,7 @@ const domController = (() => {
   const pvcBtn = document.querySelector("#pvc-btn");
   let gamePhase = "idle";
   let currentlyDraggedShipLength;
+  let shipsPlaced = 0;
   let orientation = "horizontal";
   gameController.setupComputerShips();
 
@@ -62,6 +63,7 @@ const domController = (() => {
   });
 
   enemyBoard.addEventListener("click", (e) => {
+    if (gamePhase !== "playing") return;
     if (!e.target.classList.contains("cell")) return;
 
     const x = Number(e.target.dataset.x);
@@ -227,6 +229,12 @@ const domController = (() => {
       cell.classList.remove("preview", "invalid");
     });
 
+    shipsPlaced++;
+
+    if (shipsPlaced === 3) {
+      gamePhase = "playing";
+    }
+
     renderGame();
   });
 
@@ -250,7 +258,7 @@ const domController = (() => {
 
     gameController.setupComputerShips();
 
-    cruiser.style.display = "flex";
+    carrier.style.display = "flex";
     battleship.style.display = "flex";
     cruiser.style.display = "flex";
 
