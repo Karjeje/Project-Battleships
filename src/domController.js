@@ -302,12 +302,13 @@ const domController = (() => {
 
     shipsPlaced = 0;
     currentTurn = "player";
-    gamePhase = "idle";
+    gamePhase = "placing";
 
     carrier.style.display = "flex";
     battleship.style.display = "flex";
     cruiser.style.display = "flex";
 
+    gameController.setupComputerShips();
     renderGame();
   }
 
