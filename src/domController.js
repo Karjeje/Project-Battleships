@@ -256,7 +256,12 @@ const domController = (() => {
       return;
     }
 
-    gameController.player1.gameboard.placeShip(new Ship(currentlyDraggedShipLength), newShipCoords);
+    const currentBoard =
+      gameMode === "pvp" && placingPlayer === 2
+        ? gameController.player2.gameboard
+        : gameController.player1.gameboard;
+
+    currentBoard.placeShip(new Ship(currentlyDraggedShipLength), newShipCoords);
 
     if (currentlyDraggedShipLength === 5) carrier.style.display = "none";
     else if (currentlyDraggedShipLength === 4) battleship.style.display = "none";
