@@ -20,7 +20,11 @@ const gameController = (() => {
       y = Math.floor(Math.random() * 10);
     } while (board.attackedCoordinates.some((c) => c.x === x && c.y === y));
 
+    const wasHit = board.ships.some((ship) => ship.coordinates.some((c) => c.x === x && c.y === y));
+
     player1.gameboard.receiveAttack(x, y);
+
+    return wasHit;
   }
 
   function checkWinner() {

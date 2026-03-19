@@ -75,6 +75,10 @@ const domController = (() => {
 
     if (enemyBoardState.attackedCoordinates.some((c) => c.x === x && c.y === y)) return;
 
+    const wasHit = enemyBoardState.ships.some((ship) =>
+      ship.coordinates.some((c) => c.x === x && c.y === y)
+    );
+
     gameController.playerAttack(x, y);
 
     let winner = gameController.checkWinner();
@@ -87,7 +91,13 @@ const domController = (() => {
       return;
     }
 
-    gameController.computerMove();
+    if (!wasHit) {
+      let hit;
+
+      do {
+        hit = gameController.computerMove();
+      } while (hit);
+    }
 
     winner = gameController.checkWinner();
     if (winner) {
