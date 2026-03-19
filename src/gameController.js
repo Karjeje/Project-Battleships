@@ -87,6 +87,8 @@ const gameController = (() => {
   }
 
   function setupComputerShips() {
+    player2.gameboard.ships = [];
+
     const carrierCoords = generateComputerShipCoords(5);
     player2.gameboard.placeShip(new Ship(5), carrierCoords);
 

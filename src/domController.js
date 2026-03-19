@@ -14,7 +14,6 @@ const domController = (() => {
   let currentlyDraggedShipLength;
   let shipsPlaced = 0;
   let orientation = "horizontal";
-  gameController.setupComputerShips();
 
   function renderBoard(board, container, hideShips = false) {
     container.innerHTML = "";
