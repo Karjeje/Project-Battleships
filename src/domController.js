@@ -56,6 +56,17 @@ const domController = (() => {
 
   function renderGame() {
     if (gameMode === "pvp") {
+      if (gamePhase === "placing") {
+        if (placingPlayer === 1) {
+          renderBoard(gameController.player1.gameboard, playerBoard);
+        } else {
+          renderBoard(gameController.player2.gameboard, playerBoard);
+        }
+
+        enemyBoard.innerHTML = "";
+        return;
+      }
+
       if (currentTurn === "player1") {
         renderBoard(gameController.player1.gameboard, playerBoard);
         renderBoard(gameController.player2.gameboard, enemyBoard, true);
