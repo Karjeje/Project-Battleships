@@ -8,7 +8,9 @@ const domController = (() => {
   const battleship = document.querySelector("#ship2");
   const cruiser = document.querySelector("#ship3");
   const pvcBtn = document.querySelector("#pvc-btn");
+  const resetBtn = document.querySelector("#reset-btn");
   let gamePhase = "idle";
+  let currentTurn = "player";
   let currentlyDraggedShipLength;
   let shipsPlaced = 0;
   let orientation = "horizontal";
@@ -233,9 +235,9 @@ const domController = (() => {
 
     gameController.player1.gameboard.placeShip(new Ship(currentlyDraggedShipLength), newShipCoords);
 
-    if (currentlyDraggedShipLength === 5) carrier.remove();
-    else if (currentlyDraggedShipLength === 4) battleship.remove();
-    else cruiser.remove();
+    if (currentlyDraggedShipLength === 5) carrier.style.display = "none";
+    else if (currentlyDraggedShipLength === 4) battleship.style.display = "none";
+    else cruiser.style.display = "none";
 
     currentlyDraggedShipLength = null;
     orientation = "horizontal";
@@ -278,6 +280,30 @@ const domController = (() => {
     cruiser.style.display = "flex";
 
     renderGame();
+  });
+
+  function resetGame() {
+    gameController.player1.gameboard.ships = [];
+    gameController.player1.gameboard.missedAttacks = [];
+    gameController.player1.gameboard.attackedCoordinates = [];
+
+    gameController.player2.gameboard.ships = [];
+    gameController.player2.gameboard.missedAttacks = [];
+    gameController.player2.gameboard.attackedCoordinates = [];
+
+    shipsPlaced = 0;
+    currentTurn = "player";
+    gamePhase = "idle";
+
+    carrier.style.display = "flex";
+    battleship.style.display = "flex";
+    cruiser.style.display = "flex";
+
+    renderGame();
+  }
+
+  resetBtn.addEventListener("click", () => {
+    resetGame();
   });
 
   return { renderGame };
