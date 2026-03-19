@@ -307,6 +307,20 @@ const domController = (() => {
     renderGame();
   });
 
+  pvpBtn.addEventListener("click", () => {
+    resetGame();
+
+    gameMode = "pvp";
+    gamePhase = "placing";
+    placingPlayer = 1;
+
+    carrier.style.display = "flex";
+    battleship.style.display = "flex";
+    cruiser.style.display = "flex";
+
+    renderGame();
+  });
+
   function resetGame() {
     gameController.player1.gameboard.ships = [];
     gameController.player1.gameboard.missedAttacks = [];
