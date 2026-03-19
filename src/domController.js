@@ -194,6 +194,11 @@ const domController = (() => {
     if (orientation === "horizontal") {
       if (x + currentlyDraggedShipLength > 10) {
         console.log("Ship was placed out of bounds.");
+
+        playerBoard.querySelectorAll(".preview, .invalid").forEach((cell) => {
+          cell.classList.remove("preview", "invalid");
+        });
+
         return;
       }
     }
@@ -201,6 +206,11 @@ const domController = (() => {
     if (orientation === "vertical") {
       if (y + currentlyDraggedShipLength > 10) {
         console.log("Ship was placed out of bounds.");
+
+        playerBoard.querySelectorAll(".preview, .invalid").forEach((cell) => {
+          cell.classList.remove("preview", "invalid");
+        });
+
         return;
       }
     }
@@ -213,6 +223,11 @@ const domController = (() => {
 
     if (overlapCheck) {
       console.log("Ships were overlapping.");
+
+      playerBoard.querySelectorAll(".preview, .invalid").forEach((cell) => {
+        cell.classList.remove("preview", "invalid");
+      });
+
       return;
     }
 
