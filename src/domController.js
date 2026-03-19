@@ -111,12 +111,19 @@ const domController = (() => {
       return;
     }
 
-    if (!wasHit) {
-      let hit;
+    if (gameMode === "pvp") {
+      if (!wasHit) {
+        currentTurn = currentTurn === "player1" ? "player2" : "player1";
+        alert(`${currentTurn}'s turn`);
+      }
+    } else {
+      if (!wasHit) {
+        let hit;
 
-      do {
-        hit = gameController.computerMove();
-      } while (hit);
+        do {
+          hit = gameController.computerMove();
+        } while (hit);
+      }
     }
 
     winner = gameController.checkWinner();
