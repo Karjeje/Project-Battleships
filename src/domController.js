@@ -10,6 +10,9 @@ const domController = (() => {
   const pvcBtn = document.querySelector("#pvc-btn");
   const resetBtn = document.querySelector("#reset-btn");
   const pvpBtn = document.querySelector("#pvp-btn");
+  const overlay = document.querySelector("#turn-overlay");
+  const turnMessage = document.querySelector("#turn-message");
+  const startTurnBtn = document.querySelector("#start-turn-btn");
   let gamePhase = "idle";
   let gameMode = null;
   let currentTurn = "player1";
@@ -125,9 +128,12 @@ const domController = (() => {
     if (gameMode === "pvp") {
       if (!wasHit) {
         currentTurn = currentTurn === "player1" ? "player2" : "player1";
-        setTimeout(() => {
-          alert(`${currentTurn}'s turn`);
-        }, 10);
+
+        showTurnOverlay(currentTurn, () => {
+          renderGame();
+        });
+
+        return;
       }
     } else {
       if (!wasHit) {
@@ -314,23 +320,20 @@ const domController = (() => {
           placingPlayer = 2;
           shipsPlaced = 0;
 
-          setTimeout(() => {
-            alert("Player 2: Place your ships");
-          }, 10);
+          showTurnOverlay("player2", () => {
+            carrier.style.display = "flex";
+            battleship.style.display = "flex";
+            cruiser.style.display = "flex";
 
-          carrier.style.display = "flex";
-          battleship.style.display = "flex";
-          cruiser.style.display = "flex";
+            renderGame();
+          });
 
-          renderGame();
           return;
         } else {
           gamePhase = "playing";
           currentTurn = "player1";
 
-          setTimeout(() => {
-            alert("Game starts. Player 1 turn");
-          }, 10);
+          showTurnOverlay("player1");
         }
       } else {
         gamePhase = "playing";
@@ -414,6 +417,31 @@ const domController = (() => {
   resetBtn.addEventListener("click", () => {
     resetGame();
   });
+
+  function showTurnOverlay(nextPlayer, onConfirm) {
+    playerBoard.innerHTML = "";
+    enemyBoard.innerHTML = "";
+
+    overlay.classList.remove("hidden");
+    turnMessage.textContent =
+      nextPlayer === "player1" ? "Player 1: Your turn" : "Player 2: Your turn";
+
+    startTurnBtn.onclick = null;
+
+    startTurnBtn.onclick = () => {
+      hideTurnOverlay();
+
+      if (onConfirm) {
+        onConfirm();
+      } else {
+        renderGame();
+      }
+    };
+  }
+
+  function hideTurnOverlay() {
+    overlay.classList.add("hidden");
+  }
 
   return { renderGame };
 })();
