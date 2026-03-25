@@ -360,6 +360,8 @@ const domController = (() => {
 
     gamePhase = "placing";
 
+    gameMode = "pvc";
+
     gameController.setupComputerShips();
 
     carrier.style.display = "flex";
@@ -384,10 +386,6 @@ const domController = (() => {
   });
 
   function resetGame() {
-    if (gameMode === "pvc") {
-      gameController.setupComputerShips();
-    }
-
     gameController.player1.gameboard.ships = [];
     gameController.player1.gameboard.missedAttacks = [];
     gameController.player1.gameboard.attackedCoordinates = [];
@@ -407,6 +405,10 @@ const domController = (() => {
     carrier.style.display = "flex";
     battleship.style.display = "flex";
     cruiser.style.display = "flex";
+
+    if (gameMode === "pvc") {
+      gameController.setupComputerShips();
+    }
 
     renderGame();
   }
