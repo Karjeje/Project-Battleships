@@ -356,8 +356,6 @@ const domController = (() => {
   });
 
   pvcBtn.addEventListener("click", () => {
-    resetGame();
-
     gamePhase = "placing";
 
     gameMode = "pvc";
@@ -368,12 +366,11 @@ const domController = (() => {
     battleship.style.display = "flex";
     cruiser.style.display = "flex";
 
+    resetGame();
     renderGame();
   });
 
   pvpBtn.addEventListener("click", () => {
-    resetGame();
-
     gameMode = "pvp";
     gamePhase = "placing";
     placingPlayer = 1;
@@ -382,6 +379,7 @@ const domController = (() => {
     battleship.style.display = "flex";
     cruiser.style.display = "flex";
 
+    resetGame();
     renderGame();
   });
 
